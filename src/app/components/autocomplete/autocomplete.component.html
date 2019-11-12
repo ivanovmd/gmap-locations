@@ -1,0 +1,17 @@
+<mat-form-field style="width: 100%;">
+  <input
+    type="text"
+    [placeholder]="placeholder"
+    matInput
+    [formControl]="formControl"
+    [matAutocomplete]="auto"
+  />
+  <mat-autocomplete #auto="matAutocomplete" style="width: 100%;">
+    <mat-option
+      *ngFor="let location of suggestions | async"
+      [value]="location.description"
+    >
+      {{ location.description }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

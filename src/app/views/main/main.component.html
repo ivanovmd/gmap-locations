@@ -1,57 +1,70 @@
-<form class="example-form">
-  <mat-form-field style="width: 100%;">
-    <input
-      type="text"
-      placeholder="Pick one"
-      matInput
-      [formControl]="locationControl"
-      [matAutocomplete]="auto"
-    />
-    <mat-autocomplete #auto="matAutocomplete" style="width: 100%;">
-      <mat-option
-        *ngFor="let location of locationSuggestions | async"
-        [value]="location.description"
+<div class="container">
+  <form>
+    <div class="row">
+      <div class="col">
+        <app-autocomplete
+          placeholder="Pickup"
+          [googleAutocompleteService]="autocompleteService"
+          [formControl]="pickupLocationControl"
+        ></app-autocomplete>
+      </div>
+      <div class="col">
+        <app-autocomplete
+          placeholder="Dropoff"
+          [googleAutocompleteService]="autocompleteService"
+          [formControl]="dropoffLocationControl"
+        ></app-autocomplete>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="d-flex justify-content-end">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="addTask()"
+            [disabled]="
+              !pickupLocationControl.value || !dropoffLocationControl.value
+            "
+          >
+            Add location
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container resulst">
+  <div class="row">
+    <div class="col-4">
+      <h4>Tasks</h4>
+
+      <div
+        cdkDropList
+        class="dragable-list"
+        (cdkDropListDropped)="drop($event)"
+        *ngIf="tasks.length"
       >
-        {{ location.description }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
+        <div
+          class="dragable-box"
+          *ngFor="let task of tasks; let i = index"
+          cdkDrag
+        >
+          <span>{{ task.isPickup ? "Pickup" : "Dropoff" }}</span>
+          |
+          <span>{{ task.location }}</span>
 
-  <mat-radio-group
-    aria-labelledby="example-radio-group-label"
-    class="example-radio-group"
-    [formControl]="pickupControl"
-  >
-    <mat-radio-button
-      class="example-radio-button"
-      [value]="true"
-    ></mat-radio-button
-    ><span>Pickup</span>
-    <mat-radio-button
-      class="example-radio-button"
-      [value]="false"
-    ></mat-radio-button
-    ><span>Dropoff</span>
-  </mat-radio-group>
+          <button (click)="removeLocation(task.taskId)">Delete</button>
+        </div>
+      </div>
 
-  <button mat-raised-button color="primary" (click)="(add)" [disabled]="!locationControl.value">Add location</button>
-</form>
-
-<!-- <form>
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Location"
-      aria-label="Location"
-      [matAutocomplete]="auto"
-    />
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option
-        *ngFor="let location of suggestedLocations"
-        [value]="location.description"
-      >
-        <span>{{ location.description }}</span>
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form> -->
+      <p *ngIf="!tasks.length" class="text-secondary">No tasks</p>
+    </div>
+    <div class="col-8">
+      <h4>Directions</h4>
+      <div id="map" [hidden]="mapHidden"></div>
+      <p [hidden]="!mapHidden" class="text-secondary">No routes</p>
+    </div>
+  </div>
+</div>

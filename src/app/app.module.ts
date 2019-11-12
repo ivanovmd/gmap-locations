@@ -4,7 +4,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 
 import { AppComponent } from './app.component';
@@ -13,6 +15,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoadMapsGuard } from './guards/load-maps.guard';
 import { MainComponent } from './views/main/main.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 
 const routes: Routes = [
   {
@@ -29,7 +32,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
+    AutocompleteComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,7 @@ const routes: Routes = [
     MatAutocompleteModule,
     MatFormFieldModule,
     MatButtonModule,
+    DragDropModule,
     RouterModule.forRoot(routes, { useHash: true })
   ],
   providers: [LoadMapsGuard],
