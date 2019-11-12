@@ -49,11 +49,19 @@
           class="dragable-box"
           *ngFor="let task of tasks; let i = index"
           cdkDrag
+          [title]="task.location"
         >
-          <span>{{ String.fromCharCode(65 + i) }}</span>
-          <span class="text-primary" *ngIf="task.isPickup">Pickup</span>
-          <span class="text-warning" *ngIf="!task.isPickup">Dropoff</span>
-          <span>{{ task.location }}</span>
+          <span class="task-info">{{ String.fromCharCode(65 + i) }}</span>
+          <span class="task-info text-primary" *ngIf="task.isPickup"
+            >Pickup</span
+          >
+          <span class="task-info text-warning" *ngIf="!task.isPickup"
+            >Dropoff</span
+          >
+          <span
+            class="task-info d-inline-block text-truncate"
+            >{{ task.location }}</span
+          >
 
           <button (click)="removeLocation(task.taskId)">Delete</button>
         </div>

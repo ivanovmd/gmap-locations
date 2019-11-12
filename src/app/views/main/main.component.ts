@@ -63,7 +63,7 @@ export class MainComponent implements AfterViewInit {
   }
 
   addTask() {
-    let taskId = Math.random();
+    let taskId = Math.random(); // pseudo id
     this.tasks.push({
       taskId,
       location: this.pickupLocationControl.value,
