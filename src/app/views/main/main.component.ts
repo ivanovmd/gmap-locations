@@ -22,11 +22,9 @@ export class MainComponent implements AfterViewInit {
   autocompleteService = new google.maps.places.AutocompleteService();
   locationSuggestions: Observable<any>;
   tasks = [];
-
-  directionsService
-  directionsRenderer
-
-
+  directionsService: any;
+  directionsRenderer: any;
+  String = String;
   pickupLocationControl = new FormControl();
   dropoffLocationControl = new FormControl();
 

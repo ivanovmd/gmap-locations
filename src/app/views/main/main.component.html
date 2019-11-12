@@ -3,14 +3,14 @@
     <div class="row">
       <div class="col">
         <app-autocomplete
-          placeholder="Pickup"
+          placeholder="Enter pickup location"
           [googleAutocompleteService]="autocompleteService"
           [formControl]="pickupLocationControl"
         ></app-autocomplete>
       </div>
       <div class="col">
         <app-autocomplete
-          placeholder="Dropoff"
+          placeholder="Enter dropoff location"
           [googleAutocompleteService]="autocompleteService"
           [formControl]="dropoffLocationControl"
         ></app-autocomplete>
@@ -27,7 +27,7 @@
               !pickupLocationControl.value || !dropoffLocationControl.value
             "
           >
-            Add location
+            Add Tasks
           </button>
         </div>
       </div>
@@ -37,9 +37,8 @@
 
 <div class="container resulst">
   <div class="row">
-    <div class="col-4">
+    <div class="col-md-5 tasks">
       <h4>Tasks</h4>
-
       <div
         cdkDropList
         class="dragable-list"
@@ -51,8 +50,9 @@
           *ngFor="let task of tasks; let i = index"
           cdkDrag
         >
-          <span>{{ task.isPickup ? "Pickup" : "Dropoff" }}</span>
-          |
+          <span>{{ String.fromCharCode(65 + i) }}</span>
+          <span class="text-primary" *ngIf="task.isPickup">Pickup</span>
+          <span class="text-warning" *ngIf="!task.isPickup">Dropoff</span>
           <span>{{ task.location }}</span>
 
           <button (click)="removeLocation(task.taskId)">Delete</button>
@@ -61,7 +61,7 @@
 
       <p *ngIf="!tasks.length" class="text-secondary">No tasks</p>
     </div>
-    <div class="col-8">
+    <div class="col-md-7 map">
       <h4>Directions</h4>
       <div id="map" [hidden]="mapHidden"></div>
       <p [hidden]="!mapHidden" class="text-secondary">No routes</p>
